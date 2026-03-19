@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('hello_world', 'root', 'root', {
+const sequelize = new Sequelize('task_manager', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
     port: 3306
