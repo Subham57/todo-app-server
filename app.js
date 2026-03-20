@@ -13,12 +13,14 @@ app.use('/auth', authRouter);
 //DATABASE
 const sequelize = require('./models/db');
 const User = require('./models/user');
+const Task = require('./models/task');
+const UserTask = require('./models/user_task');
 
 (async () => {
     try {
         await sequelize.authenticate();
         console.log('MySQL connection established successfully.');
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ alter: true });
     } catch (error) {
         console.error('Unable to connect to database:', error);
     }
