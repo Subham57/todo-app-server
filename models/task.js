@@ -21,9 +21,9 @@ const Task = sequelize.define('task', {
     timestamps: true
 });
 
-Task.hasMany(UserTask, {
-    foreignKey: 'task_id',
-    as: 'tasks'
-});
+// Task.hasMany(UserTask, {
+//     foreignKey: 'task_id',
+//     as: 'tasks'
+// });
 
 module.exports = Task;

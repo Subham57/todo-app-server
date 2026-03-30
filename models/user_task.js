@@ -33,14 +33,14 @@ const UserTask = sequelize.define('user_task', {
     timestamps: true
 });
 
-UserTask.belongsTo(User, {
-    foreignKey: 'user_id',
-    as: 'user'
-});
+// UserTask.belongsTo(User, {
+//     foreignKey: 'user_id',
+//     as: 'user'
+// });
 
-UserTask.belongsTo(Task, {
-    foreignKey: 'task_id',
-    as: 'task'
-});
+// UserTask.belongsTo(Task, {
+//     foreignKey: 'task_id',
+//     as: 'task'
+// });
 
 module.exports = UserTask;
