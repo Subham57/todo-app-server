@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+// IMPORTANT: middleware to parse JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 //Routes
 var indexRouter = require('./route/index');
 app.use('/', indexRouter);
