@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('./db');
-const UserTask = require('./user_task');
+// const { DataTypes } = require('sequelize');
+import { DataTypes } from "sequelize";
+import { sequelize } from "./db";
+// const sequelize = require('./db');
+// const UserTask = require('./user_task');
 
-const Task = sequelize.define('task', {
+export const Task = sequelize.define('task', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -21,9 +23,3 @@ const Task = sequelize.define('task', {
     timestamps: true
 });
 
-// Task.hasMany(UserTask, {
-//     foreignKey: 'task_id',
-//     as: 'tasks'
-// });
-
-module.exports = Task;
