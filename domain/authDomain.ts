@@ -1,4 +1,4 @@
-interface RegistrationRequest {
+export interface RegistrationRequest {
     firstName: string;
     lastName: string;
     mobNumber: number;

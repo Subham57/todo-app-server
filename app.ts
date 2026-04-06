@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import indexRouter from "./route/index";
+import { router } from "./route/index";
 import { sequelize } from "./models";
 
 const app: Application = express();
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/", indexRouter);
+app.use("/", router);
 
 // Database connection
 const startServer = async (): Promise<void> => {
