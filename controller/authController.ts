@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { RegistrationRequest } from "../domain/authDomain"
+import { RegisterUsecase } from "../usecase/authUsecase"
 export async function Login(req, res) {
     console.log('Inside login controller');
     console.log('Got the request body for the api call', req.body);
@@ -16,6 +17,11 @@ export async function Register(req: Request, res: Response) {
     request.mobNumber = req.body.mob_number;
     request.email = req.body.email;
     request.password = req.body.password;
-    console.log("after mapping to the user request", request)
-    res.send(req.body);
+    console.log("after mapping to the user request", request);
+    let usecaseResponse = await RegisterUsecase(request);
+    if (usecaseResponse == false) {
+        res.send("Email id Already present in our table so plz login to continue.");
+    } else {
+        res.send("Registration successful");
+    }
 }
