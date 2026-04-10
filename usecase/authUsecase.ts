@@ -1,5 +1,6 @@
-import { RegistrationRequest } from "../domain/authDomain";
-import { EmailCheck, generateRandomString } from "../repository/authRepository";
+import { HashRequest, RegistrationRequest } from "../domain/authDomain";
+import { EmailCheck, generateRandomString, RegisterRepository } from "../repository/authRepository";
+import bcrypt from "bcrypt";
 
 export async function RegisterUsecase(request: RegistrationRequest) {
     console.log("Inside RegisterUsecase");
@@ -7,12 +8,21 @@ export async function RegisterUsecase(request: RegistrationRequest) {
     if (EmailCheckResponse == false) {
         console.log("Email Id is already present: ", request.email);
         return false;
-    }else{
-        // External id Generate
-        let externalId = generateRandomString(10, "User")
+    } else {
         // Password Hash
-        // Table insert
+        let hashreq: HashRequest = {
+            password: request.password,
+            salt: 10
+        }
+        let hashedPassword = await hashPassword(hashreq);
+        console.log("Hashed value is ", hashedPassword);
+        request.password = hashedPassword;
+        RegisterRepository(request)
     }
 
 }
 
+export async function hashPassword(req: HashRequest): Promise<string> {
+    const hash = await bcrypt.hash(req.password, req.salt);
+    return hash;
+}
