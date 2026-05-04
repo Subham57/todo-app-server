@@ -1,6 +1,19 @@
-import { RegistrationRequest } from "../domain/authDomain";
+import { LoginRequest, RegistrationRequest } from "../domain/authDomain";
 import { User } from "../models";
+import bcrypt from "bcrypt";
 
+export async function LoginRepository(request: LoginRequest) {
+    console.log("Inside LoginRepository");
+
+    const user:any = await User.findOne({
+        where: { email: request.email },
+    });
+
+    if (!user) return false;
+
+    const isMatch = await bcrypt.compare(request.password, user.password);
+    return isMatch;
+}
 export async function RegisterRepository(request: RegistrationRequest) {
     let externalId: string;
     let exists = true;
