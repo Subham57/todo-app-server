@@ -1,9 +1,10 @@
 import { LoginRequest, RegistrationRequest } from "../domain/authDomain";
+import logger from "../logger";
 import { User } from "../models";
 import bcrypt from "bcrypt";
 
 export async function LoginRepository(request: LoginRequest) {
-    console.log("Inside LoginRepository");
+    logger.info("Inside LoginRepository");
 
     const user:any = await User.findOne({
         where: { email: request.email },
