@@ -1,9 +1,35 @@
 import { HashRequest, LoginRequest, RegistrationRequest } from "../domain/authDomain";
+import logger from "../logger";
 import { EmailCheck, LoginRepository, RegisterRepository } from "../repository/authRepository";
 import bcrypt from "bcrypt";
-
+import jwt from "jsonwebtoken";
 export async function LoginUsecase(request: LoginRequest) {
-    return LoginRepository(request);
+
+    let user = await LoginRepository(request)
+    if (user === "") {
+        return false;
+    } else {
+        let user_obj = {
+            "externalId": user
+        }
+        let accessTokenSecret = process.env.ACCESSTOKENSECRET;
+        logger.info("ACCESSTOKENSECRET", process.env.ACCESSTOKENSECRET)
+        const accessToken = jwt.sign(user_obj, accessTokenSecret, {
+            expiresIn: process.env.ACCESSTOKENEXPTIME,
+        });
+        let refreshTokenSecret = process.env.REFRESHTOKENSECRET;
+        const refreshToken = jwt.sign(user_obj, refreshTokenSecret, {
+            expiresIn: process.env.REFRESHTOKENEXPTIME,
+        });
+        logger.info("Token created successfully", accessToken);
+        logger.info("Token created successfully", refreshToken);
+        let resp = {
+            'accessToken': accessToken,
+            'refreshToken': refreshToken
+        }
+        return resp;
+    }
+    // return LoginRepository(request);
 }
 
 export async function RegisterUsecase(request: RegistrationRequest) {

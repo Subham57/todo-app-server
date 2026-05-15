@@ -13,7 +13,7 @@ export async function Login(req, res) {
         res.send("Incorrect email or password");
     } else {
         logger.info("Login successful")
-        res.send("Login successful");
+        res.send(usecaseResponse);
     }
 }
 
