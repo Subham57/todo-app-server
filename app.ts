@@ -1,15 +1,15 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express, { Application } from "express";
 import { router } from "./route/index";
 import { sequelize } from "./models";
 import logger from './logger';
-import dotenv from 'dotenv';
 const app: Application = express();
 const port: number = 3000;
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-dotenv.config();
 // Routes
 app.use("/", router);
 
@@ -20,7 +20,7 @@ const startServer = async (): Promise<void> => {
         console.log("MySQL connection established successfully.");
         logger.info("MySQL connection established successfully.");
 
-        await sequelize.sync({alter: true});
+        await sequelize.sync();
 
         app.listen(port, () => {
             console.log(`Server listening on port ${port}`);

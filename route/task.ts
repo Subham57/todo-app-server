@@ -1,9 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { CreateTask } from "../controller/taskController";
+import { jwtAuthMiddleware } from "../middleware/jwtAuthMiddleware";
 export let taskRouter = Router();
 
 /* POST Create task */
-taskRouter.post('/create', function (req: Request, res: Response, next: NextFunction) {
+taskRouter.post('/create', jwtAuthMiddleware, function (req: Request, res: Response, next: NextFunction) {
   CreateTask(req, res);
 });
 

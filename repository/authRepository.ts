@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 
 export async function LoginRepository(request: LoginRequest) {
     logger.info("Inside LoginRepository");
-
     const user:any = await User.findOne({
         where: { email: request.email },
     });
@@ -14,7 +13,8 @@ export async function LoginRepository(request: LoginRequest) {
 
     const isMatch = await bcrypt.compare(request.password, user.password);
     if (isMatch){
-        return user.external_id;
+        logger.info("Found the user : ", user)
+        return user;
     }else {
         return ""
     }

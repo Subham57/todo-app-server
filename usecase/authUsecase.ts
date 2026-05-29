@@ -10,10 +10,12 @@ export async function LoginUsecase(request: LoginRequest) {
         return false;
     } else {
         let user_obj = {
-            "externalId": user
+            "externalId": user.external_id,
+            "email": user.email,
         }
+        logger.debug("user", user)
         let accessTokenSecret = process.env.ACCESSTOKENSECRET;
-        logger.info("ACCESSTOKENSECRET", process.env.ACCESSTOKENSECRET)
+        logger.info(process.env.ACCESSTOKENSECRET)
         const accessToken = jwt.sign(user_obj, accessTokenSecret, {
             expiresIn: process.env.ACCESSTOKENEXPTIME,
         });
